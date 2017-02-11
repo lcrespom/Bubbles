@@ -1,0 +1,28 @@
+{
+  "name": "yocto",
+  "version": "1.0.0",
+  "description": "The smallest UI framework in the world",
+  "main": "dist/yocto.js",
+  "scripts": {
+    "build": "webpack -p",
+    "dev": "webpack-dev-server --content-base web/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcrespom/yocto.git"
+  },
+  "author": "Luis Crespo",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/ramda": "0.0.3",
+    "ts-loader": "^1.3.3",
+    "tslint": "*",
+    "typescript": "*",
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.2.0"
+  },
+  "dependencies": {
+    "ramda": "^0.23.0",
+    "snabbdom": "^0.6.1"
+  }
+}
