@@ -17,34 +17,37 @@ function rnd(range) {
 export class Circle extends Figure implements Animation {
 	steps = 0;
 	r: number; g: number; b: number; a: number;
-	duration: number;
+	dx: number; dy: number;
 
 	constructor(w: number, h: number) {
 		super();
 		this.x = Math.random() * w;
 		this.y = Math.random() * h;
-		this.w = Math.random() * w / 10;
+		this.w = 1; // Math.random() * w / 10;
 		this.h = this.w;
 		this.strokeStyle = 'white';
 		this.r = rnd(256);
 		this.g = rnd(256);
 		this.b = rnd(256);
 		this.a = 1;
+		this.dx = Math.random() * 4 - 2;
+		this.dy = Math.random() * 4 - 2;
 		this.done = false;
-		this.duration = 60 + Math.random() * 9;
 	}
 
 	step() {
 		this.w++;
 		this.steps++;
 		this.a -= 0.0025;
-		if (this.a <= 0 /*|| this.steps > 60 * this.duration*/) this.done = true;
+		if (this.a <= 0) this.done = true;
 	}
 
 	draw(gc: CanvasRenderingContext2D) {
 		gc.strokeStyle = this.strokeStyle;
 		gc.fillStyle = this.fillStyle;
 		this.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
+		this.x += this.dx;
+		this.y += this.dy;
 		gc.beginPath();
 		gc.arc(this.x, this.y, this.w, 0, Math.PI * 2);
 		gc.fill();
@@ -61,7 +64,7 @@ export class Circles extends AnimationContainer {
 
 	step() {
 		this.steps++;
-		if (this.steps % 30 == 0)
+		if (this.steps % 5 == 0)
 			this.add(new Circle(this.w, this.h));
 		super.step();
 	}

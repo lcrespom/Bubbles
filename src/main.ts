@@ -6,7 +6,7 @@ function createCanvas(): HTMLCanvasElement {
 	let div = document.createElement('div');
 	div.style.position = 'fixed';
 	div.style.display = 'block';
-	let margin = '10px';
+	let margin = '0';
 	div.style.top = margin;
 	div.style.bottom = margin;
 	div.style.left = margin;
