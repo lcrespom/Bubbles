@@ -36,7 +36,7 @@ export class Circle extends Figure implements Animation {
 	}
 
 	step() {
-		this.w++;
+		this.w += this.a;
 		this.steps++;
 		this.a -= 0.0025;
 		if (this.a <= 0) this.done = true;

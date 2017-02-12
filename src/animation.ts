@@ -27,10 +27,10 @@ export class AnimationContainer implements Animation {
 }
 
 
-function drawLoop(cb: () => void, timeData: any = {}) {
+function drawLoop(cb, timeData: any = {}) {
 	window.requestAnimationFrame(_ => {
 		timeData.before = performance.now();
-		cb();
+		cb(timeData);
 		calcTime(timeData);
 		drawLoop(cb, timeData);
 	});
@@ -38,22 +38,34 @@ function drawLoop(cb: () => void, timeData: any = {}) {
 
 function calcTime(timeData) {
 	timeData.time = timeData.time || 0;
+	timeData.count = timeData.count || 1;
 	let now = performance.now();
 	let elapsed = now - timeData.time;
 	timeData.time = now;
+	timeData.count++;
 	timeData.fps = 1000 / elapsed;
 	timeData.cpu = (now - timeData.before) / elapsed;
 }
 
-export function runAnimation(canvas: HTMLCanvasElement, animation: Animation) {
+function showTimeData(gc: CanvasRenderingContext2D, timeData) {
+	if (isNaN(timeData.fps)) return;
+	gc.fillStyle = 'white';
+	gc.font = '16px sans-serif';
+	if (timeData.count % 30 == 0)
+		timeData.txt = '' + timeData.fps.toPrecision(2) + ' FPS';
+	gc.fillText(timeData.txt || '', 15, 30);
+}
+
+export function runAnimation(canvas: HTMLCanvasElement, animation: Animation, showInfo = true) {
 	let ctx = canvas.getContext('2d');
 	if (!ctx) throw Error('No 2d context!');
 	let w = canvas.width;
 	let h = canvas.height;
 	let gc = ctx;
-	drawLoop(() => {
+	drawLoop(timeData => {
 		animation.step();
 		gc.clearRect(0, 0, w, h);
 		animation.draw(gc);
+		if (showInfo) showTimeData(gc, timeData);
 	});
 }
