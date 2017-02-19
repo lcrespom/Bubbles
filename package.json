@@ -1,15 +1,14 @@
 {
-  "name": "yocto",
+  "name": "bubbles",
   "version": "1.0.0",
-  "description": "The smallest UI framework in the world",
-  "main": "dist/yocto.js",
+  "description": "Small bubbles animation using HTML5 canvas",
   "scripts": {
     "build": "webpack -p",
     "dev": "webpack-dev-server --content-base web/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lcrespom/yocto.git"
+    "url": "git+https://github.com/lcrespom/bubbles.git"
   },
   "author": "Luis Crespo",
   "license": "ISC",
