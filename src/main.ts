@@ -1,5 +1,6 @@
-import { runAnimation } from './animation';
+import { Animation, runAnimation } from './animation';
 import { Circles } from './simple-anim';
+import { Lissa } from './lissajous'
 
 
 function createCanvas(): HTMLCanvasElement {
@@ -22,11 +23,27 @@ function createCanvas(): HTMLCanvasElement {
 	return canvas;
 }
 
+let animct = 1;
+
+function createAnimation(canvas): Animation {
+	animct++;
+	if (animct > 1) animct = 0;
+	switch (animct) {
+		case 0: return new Circles(canvas.width, canvas.height);
+		default: return new Lissa(canvas.width, canvas.height);
+	}
+}
 
 
 function main() {
 	let canvas = createCanvas();
-	runAnimation(canvas as HTMLCanvasElement, new Circles(canvas.width, canvas.height));
+	let animation = createAnimation(canvas)
+	runAnimation(canvas, animation)
+	canvas.onclick = () => {
+		animation.done = true
+		animation = createAnimation(canvas)
+		runAnimation(canvas, animation)
+	}
 }
 
 main();

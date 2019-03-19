@@ -30,9 +30,9 @@ export class AnimationContainer implements Animation {
 function drawLoop(cb, timeData: any = {}) {
 	window.requestAnimationFrame(_ => {
 		timeData.before = performance.now();
-		cb(timeData);
+		let done = cb(timeData);
 		calcTime(timeData);
-		drawLoop(cb, timeData);
+		if (!done) drawLoop(cb, timeData);
 	});
 }
 
@@ -67,5 +67,6 @@ export function runAnimation(canvas: HTMLCanvasElement, animation: Animation, sh
 		gc.clearRect(0, 0, w, h);
 		animation.draw(gc);
 		if (showInfo) showTimeData(gc, timeData);
+		return animation.done;
 	});
 }
